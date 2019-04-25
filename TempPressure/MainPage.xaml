@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="TempPressure.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lvc="using:LiveCharts.Uwp"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="btnCollectReadings" Width="250" Height="250" Click="BtnCollectReadings_Click" Grid.Column="0" Grid.Row="0">Collect 10 Readings</Button>
+        <Button x:Name="btnRefreshReadings" Width="250" Height="250" Grid.Row="0" Grid.Column="1" Click="BtnRefreshReadings_Click">Refresh Readings</Button>
+        <Button x:Name="btnDropTable" Width="250" Height="250" Grid.Row="0" Grid.Column="2" Click="BtnDropTable_Click">Drop Table</Button>
+        <ListBox x:Name="lstReadings" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Readings}"  >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding DeviceName}"></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Temperature (C): "></TextBlock>
+                                <TextBlock Text="{Binding Temperature}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pressure (Pa): "></TextBlock>
+                                <TextBlock Text="{Binding Pressure}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Altitude (m): "></TextBlock>
+                                <TextBlock Text="{Binding Altitude}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Timestamp: "></TextBlock>
+                                <TextBlock Text="{Binding ReadingTs}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+           
+        </ListBox>
+        <lvc:CartesianChart Series="{Binding Series}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis LabelFormatter="{Binding LabelFormatter}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+    </Grid>
+</Page>
